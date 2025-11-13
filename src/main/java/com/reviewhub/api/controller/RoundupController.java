@@ -11,10 +11,10 @@ public class RoundupController {
   private final InMemoryStore store;
   public RoundupController(InMemoryStore store) { this.store = store; }
 
-  // GET /api/roundups/{slug}
   @GetMapping("/{slug}")
-  public ResponseEntity<RoundupArticle> bySlug(@PathVariable String slug) {
-    var a = store.roundupsBySlug.get(slug);
-    return a == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(a);
-  }
+  public ResponseEntity<RoundupArticle> bySlug(@PathVariable("slug") String slug) {
+	  var a = store.roundupsBySlug.get(slug);
+	  return a == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(a);
+	}
+
 }

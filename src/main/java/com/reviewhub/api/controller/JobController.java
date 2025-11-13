@@ -39,14 +39,15 @@ public class JobController {
   // GET /api/scrape-jobs?page&size&status?
   @GetMapping
   public ResponseEntity<PagedResponse<ScrapeJob>> list(
-      @RequestParam(defaultValue="0") @Min(0) int page,
-      @RequestParam(defaultValue="10") @Min(1) @Max(100) int size,
-      @RequestParam(required=false) String status
+      @RequestParam(name="page", defaultValue="0") @Min(0) int page,
+      @RequestParam(name="size", defaultValue="10") @Min(1) @Max(100) int size,
+      @RequestParam(name="status", required=false) String status
   ) {
     var items = jobs.list(page, size, status);
     var total = jobs.total(status);
     return ResponseEntity.ok(new PagedResponse<>(items, page, size, total));
   }
+
 
   // GET /api/scrape-jobs/{id}
   @GetMapping("/{id}")
