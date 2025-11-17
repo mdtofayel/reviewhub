@@ -45,7 +45,7 @@ public class InMemoryStore {
       Product p = new Product(
           UUID.randomUUID().toString(),
           slug,
-          "Sample Product " + i,
+          "Mta product Product " + i,
           (i % 2 == 0 ? "Acme" : "Contoso"),
           (i % 3 == 0 ? null : 99.99 + i),
           "EUR",

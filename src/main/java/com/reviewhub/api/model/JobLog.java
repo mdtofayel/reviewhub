@@ -3,7 +3,7 @@ package com.reviewhub.api.model;
 import java.time.Instant;
 
 public record JobLog(
-    Instant ts,
-    String level,   // INFO | WARN | ERROR
-    String message
+        Instant ts,
+        String level,
+        String message
 ) {}

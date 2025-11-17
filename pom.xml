@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.reviewhub</groupId>
@@ -11,6 +12,7 @@
   <properties>
     <java.version>21</java.version>
     <spring.boot.version>3.3.4</spring.boot.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
   </properties>
 
   <dependencyManagement>
@@ -32,10 +34,23 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- Validation for request params/bodies -->
+    <!-- Validation -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- JPA plus Hibernate -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- PostgreSQL driver -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Tests -->
@@ -48,9 +63,20 @@
 
   <build>
     <plugins>
+      <!-- Spring Boot plugin -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <!-- Java compiler plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+        </configuration>
       </plugin>
     </plugins>
   </build>
