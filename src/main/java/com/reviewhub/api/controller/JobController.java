@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reviewhub.api.dto.PagedResponse;
 import com.reviewhub.api.model.JobLog;
+import com.reviewhub.api.model.RawProduct;
 import com.reviewhub.api.model.ScrapeJob;
 import com.reviewhub.api.service.JobService;
 
@@ -32,10 +33,10 @@ public class JobController {
     }
 
     public record CreateJobBody(
-        String keyword,
-        String market,
-        Integer depth,
-        String searchUrl
+            String keyword,
+            String market,
+            Integer depth,
+            String searchUrl
     ) {}
 
     @PostMapping
@@ -49,9 +50,9 @@ public class JobController {
 
     @GetMapping
     public ResponseEntity<PagedResponse<ScrapeJob>> list(
-        @RequestParam(name = "page", defaultValue = "0") @Min(0) int page,
-        @RequestParam(name = "size", defaultValue = "10") @Min(1) @Max(100) int size,
-        @RequestParam(name = "status", required = false) String status
+            @RequestParam(name = "page", defaultValue = "0") @Min(0) int page,
+            @RequestParam(name = "size", defaultValue = "10") @Min(1) @Max(100) int size,
+            @RequestParam(name = "status", required = false) String status
     ) {
         var items = jobs.list(page, size, status);
         var total = jobs.total(status);
@@ -66,12 +67,23 @@ public class JobController {
 
     @GetMapping("/{id}/logs")
     public ResponseEntity<List<JobLog>> logs(
-        @PathVariable("id") String id,
-        @RequestParam(name = "after", required = false)
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant after
+            @PathVariable("id") String id,
+            @RequestParam(name = "after", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant after
     ) {
         var exists = jobs.byId(id);
         if (exists == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(jobs.logs(id, after));
+    }
+
+    // new endpoint for raw products of this job
+    @GetMapping("/{id}/raw-products")
+    public ResponseEntity<List<RawProduct>> rawProducts(@PathVariable("id") String id) {
+        var exists = jobs.byId(id);
+        if (exists == null) {
+            return ResponseEntity.notFound().build();
+        }
+        var items = jobs.rawProductsForJob(id);
+        return ResponseEntity.ok(items);
     }
 }

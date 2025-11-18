@@ -14,7 +14,8 @@ public class RawProduct {
     @Column(name = "job_id", nullable = false, length = 64)
     private String jobId;
 
-    @Column(name = "source_url", length = 2048)
+    // very long urls
+    @Column(name = "source_url", columnDefinition = "text")
     private String url;
 
     @Column(name = "title", length = 1000)
@@ -32,22 +33,23 @@ public class RawProduct {
     @Column(name = "availability", length = 500)
     private String availability;
 
-    @Lob
-    @Column(name = "description_bullets")
+    // long bullet text
+    @Column(name = "description_bullets", columnDefinition = "text")
     private String descriptionBullets;
 
-    @Lob
-    @Column(name = "long_description")
+    // long description text
+    @Column(name = "long_description", columnDefinition = "text")
     private String longDescription;
 
-    @Lob
-    @Column(name = "technical_details_json")
+    // json as long text
+    @Column(name = "technical_details_json", columnDefinition = "text")
     private String technicalDetailsJson;
 
     @Column(name = "category_guess", length = 255)
     private String categoryGuess;
 
-    @Column(name = "image_url", length = 2048)
+    // very long image urls or local file path
+    @Column(name = "image_url", columnDefinition = "text")
     private String imageUrl;
 
     @Column(name = "created_at", nullable = false)

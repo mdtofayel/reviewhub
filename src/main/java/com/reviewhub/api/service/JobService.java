@@ -148,4 +148,9 @@ public class JobService {
 
         addLog(job, "INFO", "Stored raw product for url " + req.getUrl());
     }
+
+    // new method used by controller and frontend
+    public List<RawProduct> rawProductsForJob(String jobId) {
+        return rawProducts.findByJobIdOrderByCreatedAtAsc(jobId);
+    }
 }

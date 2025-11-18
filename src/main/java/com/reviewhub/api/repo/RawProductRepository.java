@@ -8,4 +8,6 @@ import java.util.List;
 public interface RawProductRepository extends JpaRepository<RawProduct, Long> {
 
     List<RawProduct> findByJobIdAndProcessedFalse(String jobId);
+
+    List<RawProduct> findByJobIdOrderByCreatedAtAsc(String jobId);
 }
