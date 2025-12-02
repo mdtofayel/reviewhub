@@ -17,13 +17,17 @@ public class ProductService {
   public ProductService(InMemoryStore store) { this.store = store; }
 
   public List<Product> random(int limit) {
-    return store.productsBySlug.values().stream().limit(Math.max(1, limit)).toList();
-  }
+	    return store.productsBySlug.values().stream()
+	        .sorted(Comparator.comparing(Product::createdAt).reversed())
+	        .limit(Math.max(1, limit))
+	        .toList();
+	  }
+
 
   public Product bySlug(String slug) {
     return store.productsBySlug.get(slug);
   }
-
+  
   public PagedResponse<Product> search(
       String q, String category, String sort,
       Integer page, Integer size,
